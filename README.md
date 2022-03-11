@@ -1,3 +1,6 @@
+# aws-cloudwatch-logs-retention
+Enforce CloudWatch Log Retention Policies in AWS Regions as a Cost optimization measure
+
 <!--
 title: 'AWS Python Example'
 description: 'This template demonstrates how to deploy a Python function running on AWS Lambda using the traditional Serverless Framework.'
