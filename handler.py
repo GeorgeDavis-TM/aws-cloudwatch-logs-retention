@@ -54,6 +54,8 @@ def main(event, context):
 
     for regionName in regionList:
 
+        print("Starting in Region ", str(regionName), "...")
+
         logsClient = boto3.client('logs', region_name=regionName)
 
         logGroupsDict = getLogGroupsDict(logsClient)
