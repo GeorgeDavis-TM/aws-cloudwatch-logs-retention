@@ -1,0 +1,8 @@
+{
+    "default": 180,
+    "logGroupRetentionConfig": {
+        "/aws/lambda": 30,
+        "/aws/apigateway": 30,
+        "/aws/codebuild": 30
+    }
+}
