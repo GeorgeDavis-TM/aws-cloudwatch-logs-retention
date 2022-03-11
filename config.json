@@ -3,6 +3,8 @@
     "logGroupRetentionConfig": {
         "/aws/lambda": 30,
         "/aws/apigateway": 30,
-        "/aws/codebuild": 30
+        "/aws/codebuild": 30,
+        "/aws/glue": 30,
+        "/aws/eks": 30
     }
 }
