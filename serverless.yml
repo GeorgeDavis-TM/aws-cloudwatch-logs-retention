@@ -8,31 +8,27 @@ custom:
   defaultStage: dev
   stages:
     dev:
-      profile: default
-      stackDeploymentRegion: us-east-2
+      awscli_profile: default
+      aws_region: us-east-2
       regionList: us-east-1,us-east-2,us-west-1,us-west-2,ca-central-1
       exceptionLogGroups: filestoragesecurity-ingestbucket,filestoragesecurity-ingestbucket-2,filestoragesecurity-ingestbucket-3-ca
-      defaultLogRetentionInDays: 14
     prod:
-      profile: serverless
-      stackDeploymentRegion: us-east-1
+      awscli_profile: serverless
+      aws_region: us-east-1
       regionList: us-east-1,us-east-2,us-west-1,us-west-2,ca-central-1
       exceptionLogGroups: serverless-cloudone
-      defaultLogRetentionInDays: 14
 
 provider:
   name: aws
   runtime: python3.8
-  profile: ${self:custom.stages.${opt:stage}.profile}
+  profile: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.awscli_profile}
   stage: ${opt:stage, self:custom.defaultStage}
-  region: ${self:custom.stages.${opt:stage}.stackDeploymentRegion}
+  region: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
   memorySize: 128
   timeout: 300
-  logRetentionInDays: 14
   environment:
-    regionList: us-east-1,us-east-2,us-west-1,us-west-2,ca-central-1
-    exceptionLogGroups: serverless-cloudone
-    logRetentionInDays: 14
+    regionList: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.regionList}
+    exceptionLogGroups: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.exceptionLogGroups}
   tags:
     BusinessCase: aws-cloudwatch-logs-retention
     Owner: TrendMicro
@@ -63,4 +59,5 @@ functions:
       - schedule:
           name: scheduled-aws-cloudwatch-logs-retention-${opt:stage, self:custom.defaultStage}
           description: 'aws-cloudwatch-logs-retention Cleanup Tasks Run Schedule'
+          # Runs 1st of every month, at 2300hrs UTC time
           rate: cron(0 23 1 * ? *)
