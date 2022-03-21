@@ -25,7 +25,8 @@ provider:
   stage: ${opt:stage, self:custom.defaultStage}
   region: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
   memorySize: 128
-  timeout: 300
+  timeout: 300  
+  logRetentionInDays: 14
   environment:
     regionList: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.regionList}
     exceptionLogGroups: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.exceptionLogGroups}
